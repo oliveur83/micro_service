@@ -1,6 +1,6 @@
 # Projet de Développement de Microservices pour la Gestion d'Équipes de Football
 
-Ce projet met en œuvre un système de gestion d'équipes de football en utilisant des microservices basés sur Spring Boot. Les microservices gèrent différentes fonctionnalités liées au football, notamment la gestion des équipes, des joueurs, des matchs et des statistiques. De plus, le projet inclut des fonctionnalités de tolérance de panne, de monitoring, de documentation Swagger, de load balancing.
+Ce projet met en œuvre un système de gestion d'équipes de football en utilisant des microservices basés sur Spring Boot. Les microservices gèrent différentes fonctionnalités liées au football, notamment la gestion des équipes, des joueurs, des matchs et des statistiques. De plus, le projet inclut des fonctionnalités de tolérance de panne, de monitoring, de documentation Swagger, de load balancing. 
 
 ## Contenu du Projet
 
