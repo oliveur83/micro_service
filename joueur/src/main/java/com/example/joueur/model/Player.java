@@ -17,6 +17,9 @@ public class Player {
         this.id = id;
 
     }
+    public Player() {
+        // Constructeur par défaut sans arguments
+    }
     // Getters et setters
 
     public int getId() {

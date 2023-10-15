@@ -1,12 +1,13 @@
 package com.example.joueur.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.joueur.model.Player;
 
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 @RestController
@@ -28,17 +29,34 @@ private static final Map<Integer, Player> playerService = new HashMap<Integer, P
         return  toto;
     }
 
-    @PostMapping("/{id}")
-    public Player addPlayer(int id,@RequestBody Player player) {
+@PostMapping("/")
+public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
+    int maxId = 0;
 
-        Player toto= new Player("tata", id);
-    
-        playerService.put(id,toto);
-    return toto;
+    // Recherchez l'ID maximum actuel dans le service de joueurs
+    for (int id : playerService.keySet()) {
+        if (id > maxId) {
+            maxId = id;
+        }
     }
+
+    // Incrémentez l'ID maximum de 1 pour obtenir le nouvel ID
+    int newId = maxId + 1;
+
+    // Ajoutez le joueur avec le nouvel ID dans le service de joueurs
+    player.setId(newId);
+    playerService.put(newId, player);
+
+    // Récupérez le joueur ajouté
+    Player newPlayer = playerService.get(newId);
+
+    return ResponseEntity.ok(newPlayer);
+}
+
 
     @PutMapping("/{id}")
     public Player updatePlayer(@PathVariable int id, @RequestBody Player player) {
+        //todo identifiant unique 
         //pour recupere celle que l'on selctione 
         if (playerService.containsKey(id)) {
             playerService.remove(id);
