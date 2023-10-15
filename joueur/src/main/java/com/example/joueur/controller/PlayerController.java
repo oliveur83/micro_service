@@ -5,11 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.joueur.model.Player;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 
 import java.util.Map;
 
+@Api(value = "Player", description = "Opérations pour la gestion des joueurs")
 @RestController
 @RequestMapping("/players")
 public class PlayerController {
@@ -21,14 +23,14 @@ private static final Map<Integer, Player> playerService = new HashMap<Integer, P
             put(2, new Player("tata",2));
         }
     };
-
+    @ApiOperation(value = "Récupérer un joueur par I")
     @GetMapping("/{id}")
     public Player getPlayerById(@PathVariable int id) {
         Player toto= playerService.get(id);
        
         return  toto;
     }
-
+    @ApiOperation(value = "Ajouter un joueur")
 @PostMapping("/")
 public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
     int maxId = 0;
@@ -53,7 +55,7 @@ public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
     return ResponseEntity.ok(newPlayer);
 }
 
-
+@ApiOperation(value = "Mettre à jour un joueur par ID")
     @PutMapping("/{id}")
     public Player updatePlayer(@PathVariable int id, @RequestBody Player player) {
         //todo identifiant unique 
@@ -69,7 +71,7 @@ public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
         //on modifie
         
     }
-
+    @ApiOperation(value = "Supprimer un joueur par ID")
     @DeleteMapping("/{id}")
     public void deletePlayer(@PathVariable int id) {
         if (playerService.containsKey(id)) {

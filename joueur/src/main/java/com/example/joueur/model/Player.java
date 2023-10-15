@@ -5,11 +5,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(notes = "ID unique du joueur")
     private int id;
+    @ApiModelProperty(notes = "Nom du joueur")
     private String name;
 
     public Player(String name, int id) {

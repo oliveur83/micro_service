@@ -3,45 +3,38 @@ package com.example.stat.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.example.stat.model.PlayerStats;
 import com.example.stat.model.TeamStats;
-
 import java.util.HashMap;
 import java.util.Map;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value = "Statistique", description = "Opérations pour la gestion des statistiques")
 @RestController
 @RequestMapping("/statistiques")
 public class StatistiqueController {
 
     @Autowired
-    private static final Map<Integer, TeamStats> StatsService = new HashMap<Integer, TeamStats>() {
+    private static final Map<Integer, TeamStats> statsService = new HashMap<Integer, TeamStats>() {
         {
-            TeamStats STeamStats1 = new TeamStats(0, 0, 0, 0);
-
-              put(1, STeamStats1);
-    
-              TeamStats STeamStats2 = new TeamStats(0, 0, 0, 0);
-
-            put(2, STeamStats2);
+            put(1, new TeamStats(0, 0, 0, 0));
+            put(2, new TeamStats(0, 0, 0, 0));
         }
     };
 
     @Autowired
     private static final Map<Integer, PlayerStats> playerStatsService = new HashMap<Integer, PlayerStats>() {
         {
-            PlayerStats playerStats1 = new PlayerStats(0, 0, 0, 0);
-
-              put(1, playerStats1);
-    
-            PlayerStats playerStats2 = new PlayerStats(0, 0, 0, 0);
-
-            put(2, playerStats2);
+            put(1, new PlayerStats(0, 0, 0, 0));
+            put(2, new PlayerStats(0, 0, 0, 0));
         }
-    }; @GetMapping("/team-stats/{teamId}")
+    };
+
+    @ApiOperation(value = "Récupérer les statistiques d'une équipe par ID")
+    @GetMapping("/team-stats/{teamId}")
     public ResponseEntity<TeamStats> getTeamStats(@PathVariable int teamId) {
-        // Récupérez les statistiques de l'équipe en fonction de teamId
-        TeamStats teamStats = StatsService.get(teamId);
+        TeamStats teamStats = statsService.get(teamId);
         if (teamStats != null) {
             return ResponseEntity.ok(teamStats);
         } else {
@@ -49,9 +42,9 @@ public class StatistiqueController {
         }
     }
 
+    @ApiOperation(value = "Récupérer les statistiques d'un joueur par ID")
     @GetMapping("/player-stats/{playerId}")
     public ResponseEntity<PlayerStats> getPlayerStats(@PathVariable int playerId) {
-        // Récupérez les statistiques du joueur en fonction de playerId
         PlayerStats playerStats = playerStatsService.get(playerId);
         if (playerStats != null) {
             return ResponseEntity.ok(playerStats);
@@ -59,6 +52,4 @@ public class StatistiqueController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 }
