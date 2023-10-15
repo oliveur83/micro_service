@@ -32,12 +32,20 @@ Le projet est divisé en plusieurs parties, chacune représentant un aspect clé
 7. Déployez le microservice MatchService sur Kubernetes en utilisant les manifestes Kubernetes fournis.
 
 8. Documentez votre code en expliquant les choix de conception et les étapes clés de l'implémentation.
+## eureka adresse
+http://localhost:8761/
 
-## Captures d'Écran
+## adresse de test des micro service 
+http://localhost:8080/playerService/players/
+http://localhost:8079/team/teams/
+http://localhost:8077/stat/statistiques/
+http://localhost:8078/match/matches/
 
-![Swagger Documentation](/path/to/swagger-screenshot.png)
-
-![Actuator Monitoring](/path/to/actuator-screenshot.png)
+## adress de test pour swagger
+http://localhost:8078/match/swagger-ui.html
+http://localhost:8077/stat/swagger-ui.html
+http://localhost:8080/playerService/swagger-ui.html
+http://localhost:8079/team/swagger-ui.html
 
 ## Auteur
 
