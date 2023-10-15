@@ -1,5 +1,5 @@
 package com.example.match.controller;
-
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.example.match.model.Match;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +24,10 @@ public class MatchController {
         }
     };
 
+   
     @ApiOperation(value = "Récupérer un match par ID")
     @GetMapping("/{id}")
+    @HystrixCommand(fallbackMethod = "getMatchByIdFallback")
     public ResponseEntity<Match> getMatchById(@PathVariable int id) {
         Match match = matchService.get(id);
         if (match != null) {
@@ -34,7 +36,6 @@ public class MatchController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @ApiOperation(value = "Ajouter un match")
     @PostMapping("/{name1}-{name2}")
     public ResponseEntity<List<Match> >addMatch(@PathVariable String name1, @PathVariable String name2) {
@@ -43,18 +44,20 @@ public class MatchController {
         matchService.put(id1, match);
         return ResponseEntity.ok(new ArrayList<>(matchService.values()));
     }
-
+    
     @ApiOperation(value = "Mettre à jour un match par ID")
     @PutMapping("/{id}")
-    public ResponseEntity<List<Match> >updateMatch(@PathVariable int id, @RequestBody Match updatedMatch) {
+    @HystrixCommand(fallbackMethod = "updateMatchFallback")
+    public ResponseEntity<Match>updateMatch(@PathVariable int id, @RequestBody Match updatedMatch) {
         if (matchService.containsKey(id)) {
             updatedMatch.setId(id);
             matchService.put(id, updatedMatch);
-            return ResponseEntity.ok(new ArrayList<>(matchService.values()));
+            return ResponseEntity.ok(updatedMatch);
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
+    };
+
 
     @ApiOperation(value = "Supprimer un match par ID")
     @DeleteMapping("/{id}")
